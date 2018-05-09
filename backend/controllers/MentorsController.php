@@ -12,7 +12,7 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class MentorsController extends Controller
 {
     /**
      * @inheritdoc
@@ -23,15 +23,6 @@ class SiteController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
                     [
                         'allow' => true,
                         'roles' => ['@'],
@@ -60,6 +51,22 @@ class SiteController extends Controller
     }
 
     /**
+     * Finds the Article model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Mentor the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Displays homepage.
      *
      * @return string
@@ -70,53 +77,33 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
-     *
-     * @return string
+     * Displays a single Mentor
+     * @param integer $id
+     * @return mixed
      */
-    public function actionLogin()
+    public function actionView($id)
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
     /**
-     * Logout action.
+     * Creates Mentor action.
      *
      * @return string
      */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Add Mentor action.
-     *
-     * @return string
-     */
-    public function actionAddMentor()
+    public function actionCreate()
     {
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->saveUser()) {
-            return $this->redirect(['mentor', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('add_mentor', [
             'model' => $model,
         ]);
     }
+
 }

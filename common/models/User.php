@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -15,6 +16,14 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
+ * @property string $first_name
+ * @property string $sur_name
+ * @property string $male
+ * @property string $avatar
+ * @property string $about
+ * @property string $phone_number
+ * @property string $country
+ * @property string $city
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -53,6 +62,30 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['first_name', 'sur_name', 'email'], 'required'],
+            [['first_name', 'sur_name'], 'string', 'max' => 20],
+            ['email', 'email'],
+            ['email', 'unique', 'targetAttribute' => ['email'], 'message' => 'Пользователь с такой почтой уже существует.'],
+
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'first_name' => 'Имя',
+            'sur_name' => 'Фамилия',
+            'email' => 'Email',
+            'male' => 'Пол',
+            'avatar' => 'Аватар',
+            'about' => 'О себе',
+            'phone_number' => 'Номер телефона',
+            'country' => 'Страна',
+            'city' => 'Город',
         ];
     }
 
@@ -73,14 +106,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by username
+     * Finds user by email
      *
-     * @param string $username
+     * @param string $email
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByEmail($email)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -113,7 +146,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -185,5 +218,69 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Generates random password
+     */
+    function genPassword($length = 10)
+    {
+        $chars = "qazxswedcvfrtgbnhyujmkiolp1234567890QAZXSWEDCVFRTGBNHYUJMKIOLP";
+        $length = intval($length);
+        $size = strlen($chars) - 1;
+        $password = "";
+        while ($length--) $password .= $chars[rand(0, $size)];
+        return $password;
+    }
+
+    /**
+     * Is Admin
+     * @param $id
+     * @return bool
+     */
+    public static function isAdmin($id)
+    {
+        $user = User::find()->one($id);
+        if ($user->status == 10) {
+            return true;
+        }
+        return true;
+    }
+
+    /**
+     * Sends email to new user
+     * @param $password
+     */
+    public function sendMail($password)
+    {
+        Yii::$app->mailer->compose()
+            ->setFrom('learnplat@mail.ru')
+            ->setTo($this->email)
+            ->setSubject('Доступ к учебной платформе открыт')
+            ->setHtmlBody(
+                '<b>Для входа в систему используйте следующие данные:</b><br>
+                        Логин: ваш Email<br>
+                        Пароль: ' . $password . ''
+            )
+            ->send();
+    }
+
+    /**
+     * Saving new user
+     */
+    public function saveUser()
+    {
+        if (!$this->validate()) {
+            return null;
+        }
+
+        $user = new User();
+
+        $password = $this->genPassword();
+//        $user->sendMail($password);
+        $user->setPassword($password);
+        $user->generateAuthKey();
+        $user->status = 10;
+        return $this->save() ? $user : null;
     }
 }
