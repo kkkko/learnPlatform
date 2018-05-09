@@ -60,9 +60,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'default', 'value' => self::STATUS_DELETED],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            [['first_name', 'sur_name', 'email'], 'required'],
             [['first_name', 'sur_name'], 'string', 'max' => 20],
             ['email', 'email'],
             ['email', 'unique', 'targetAttribute' => ['email'], 'message' => 'Пользователь с такой почтой уже существует.'],
@@ -196,6 +195,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
+
     /**
      * Generates "remember me" authentication key
      */
@@ -221,6 +221,20 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Is Admin
+     * @param $id
+     * @return bool
+     */
+//    public static function isAdmin($id)
+//    {
+//        $user = User::find()->one($id);
+//        if ($user->status == 10) {
+//            return true;
+//        }
+//        return true;
+//    }
+
+    /**
      * Generates random password
      */
     function genPassword($length = 10)
@@ -231,20 +245,6 @@ class User extends ActiveRecord implements IdentityInterface
         $password = "";
         while ($length--) $password .= $chars[rand(0, $size)];
         return $password;
-    }
-
-    /**
-     * Is Admin
-     * @param $id
-     * @return bool
-     */
-    public static function isAdmin($id)
-    {
-        $user = User::find()->one($id);
-        if ($user->status == 10) {
-            return true;
-        }
-        return true;
     }
 
     /**
@@ -266,9 +266,9 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Saving new user
+     * Saving new mentor
      */
-    public function saveUser()
+    public function saveMentor()
     {
         if (!$this->validate()) {
             return null;
@@ -277,10 +277,10 @@ class User extends ActiveRecord implements IdentityInterface
         $user = new User();
 
         $password = $this->genPassword();
-//        $user->sendMail($password);
+        $user->sendMail($password);
         $user->setPassword($password);
         $user->generateAuthKey();
-        $user->status = 10;
+        $user->status = self::STATUS_ACTIVE;
         return $this->save() ? $user : null;
     }
 }

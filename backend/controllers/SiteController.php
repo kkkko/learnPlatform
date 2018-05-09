@@ -102,21 +102,4 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Add Mentor action.
-     *
-     * @return string
-     */
-    public function actionAddMentor()
-    {
-        $model = new User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->saveUser()) {
-            return $this->redirect(['mentor', 'id' => $model->id]);
-        }
-
-        return $this->render('add_mentor', [
-            'model' => $model,
-        ]);
-    }
 }

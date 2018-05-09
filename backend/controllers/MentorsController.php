@@ -97,7 +97,7 @@ class MentorsController extends Controller
     {
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->saveUser()) {
+        if ($model->load(Yii::$app->request->post()) && $model->saveMentor()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
