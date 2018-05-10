@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -208,5 +209,22 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Activates user
+     */
+    public function actionActivate() {
+        if (Yii::$app->request->get()) {
+
+            $email = Yii::$app->request->get('email');
+            $token = Yii::$app->request->get('token');
+
+            if (User::activateUser($email, $token)) {
+                if (Yii::$app->getUser()->login(User::activateUser($email, $token))) {
+                    return $this->goHome();
+                }
+            };
+        }
     }
 }

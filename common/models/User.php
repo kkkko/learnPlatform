@@ -248,39 +248,78 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Generates email cinfirm token and sets it to the model
+     *
+     */
+    public function genEmailConfirmToken()
+    {
+        return Yii::$app->security->generateRandomString();
+    }
+
+    /**
      * Sends email to new user
+     * @param $email
+     * @param $token
      * @param $password
      */
-    public function sendMail($password)
+    public function sendEmail($email, $token, $password)
     {
         Yii::$app->mailer->compose()
             ->setFrom('learnplat@mail.ru')
-            ->setTo($this->email)
-            ->setSubject('Доступ к учебной платформе открыт')
+            ->setTo($email)
+            ->setSubject('Подтверждение регистрации на учебном портале')
             ->setHtmlBody(
-                '<b>Для входа в систему используйте следующие данные:</b><br>
-                        Логин: ваш Email<br>
-                        Пароль: ' . $password . ''
+                '<b>Для подтверждения регистрации перейдите по ссылке:</b><br>
+                        <a href="' .Yii::$app->request->getHostName() .'/site/activate?email=' .$this->email .'&token=' .$token .'">' .Yii::$app->request->getHostName() .'/site/activate?email=' .$this->email .'&token=' .$token .'</a><br>
+                        После потдверждения используйте ваш Email в качестве логина пароль указанный ниже: <br>
+                        Пароль: ' . $password
             )
             ->send();
     }
 
     /**
-     * Saving new mentor
+     * Saves new user
      */
-    public function saveMentor()
+    public function saveUser()
     {
         if (!$this->validate()) {
             return null;
         }
 
-        $user = new User();
+        $email = $this->email;
 
         $password = $this->genPassword();
-        $user->sendMail($password);
-        $user->setPassword($password);
-        $user->generateAuthKey();
-        $user->status = self::STATUS_ACTIVE;
-        return $this->save() ? $user : null;
+        $token = $this->genEmailConfirmToken();
+        $this->email_confirm_token = $token;
+
+        $this->sendEmail($email, $token, $password);
+
+        $this->setPassword($password);
+        $this->generateAuthKey();
+
+        return $this->save() ? $this : null;
+    }
+
+    /**
+     * @param $email
+     * @param $token
+     * @return bool|int
+     */
+    public static function activateUser($email, $token)
+    {
+
+        $user = User::find()->where(['email' => $email])->one();
+
+        if ($user) {
+            if ($user->email_confirm_token == $token) {
+                $user->status = self::STATUS_ACTIVE;
+                return $user->save() ? $user : null;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
     }
 }

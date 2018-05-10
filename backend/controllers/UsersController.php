@@ -10,7 +10,7 @@ use yii\filters\AccessControl;
 /**
  * Site controller
  */
-class MentorsController extends Controller
+class UsersController extends Controller
 {
     /**
      * @inheritdoc
@@ -87,20 +87,19 @@ class MentorsController extends Controller
     }
 
     /**
-     * Creates Mentor action.
+     * Creates User action.
      *
      * @return string
      */
     public function actionCreate()
     {
         $model = new User();
-        $model->isMentor = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->saveUser()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('add_mentor', [
+        return $this->render('add_user', [
             'model' => $model,
         ]);
     }
