@@ -306,7 +306,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @param $token
      * @return bool|int
      */
-    public static function activateUser($email, $token)
+    public function activateUser($email, $token)
     {
 
         $user = User::find()->where(['email' => $email])->one();
@@ -314,6 +314,8 @@ class User extends ActiveRecord implements IdentityInterface
         if ($user) {
             if ($user->email_confirm_token == $token) {
                 $user->status = self::STATUS_ACTIVE;
+                $newToken = $this->genEmailConfirmToken();
+                $user->email_confirm_token = $newToken;
                 return $user->save() ? $user : null;
             } else {
                 return false;

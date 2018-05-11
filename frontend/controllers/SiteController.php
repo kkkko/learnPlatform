@@ -200,8 +200,13 @@ class SiteController extends Controller
             $email = Yii::$app->request->get('email');
             $token = Yii::$app->request->get('token');
 
-            if (User::activateUser($email, $token)) {
-                if (Yii::$app->getUser()->login(User::activateUser($email, $token))) {
+            $user = new User();
+
+            $user->activateUser($email, $token);
+
+            if ($user) {
+                if (Yii::$app->getUser()->login($user)) {
+                    Yii::$app->session->setFlash('success', "Адрес электронной почты подтвержден");
                     return $this->goHome();
                 }
             };
