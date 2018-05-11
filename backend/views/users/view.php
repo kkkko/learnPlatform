@@ -4,7 +4,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-$this->title = 'Страница наставника';
+$this->title = 'Страница пользователя';
 ?>
 <div class="article-view">
 

@@ -4,9 +4,12 @@ namespace backend\controllers;
 
 use common\models\User;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
+
 /**
  * Site controller
  */
@@ -71,7 +74,16 @@ class UsersController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find()->where(['isAdmin' => null, 'isMentor' => null])->orderBy('id desc'),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
