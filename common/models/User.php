@@ -302,6 +302,18 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Saves updated user
+     */
+    public function saveUserUpdate()
+    {
+        if (!$this->validate()) {
+            return null;
+        }
+
+        return $this->save() ? $this : null;
+    }
+
+    /**
      * @param $email
      * @param $token
      * @return bool|int
