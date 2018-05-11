@@ -12,7 +12,7 @@ $this->title = 'My Yii Application';
         <h2>Панель администратора</h2>
     </div>
 
-    <div class="body-content">
+    <div class="admin-menu">
         <div class="row">
             <div class="col-xs-12 col-lg-2">
                 <a href="<?=  Url::to(['users/index']); ?>">Пользователи</a>
@@ -21,6 +21,10 @@ $this->title = 'My Yii Application';
             <div class="col-xs-12 col-lg-2">
                 <a href="<?=  Url::to(['users/create']); ?>">Добавить пользователя</a>
                 <a href="<?=  Url::to(['mentors/create']); ?>">Добавить наставника</a>
+            </div>
+            <div class="col-xs-12 col-lg-2">
+                <a href="<?=  Url::to(['courses']); ?>">Курсы</a>
+                <a href="<?=  Url::to(['courses/create']); ?>">Добавить курс</a>
             </div>
         </div>
     </div>

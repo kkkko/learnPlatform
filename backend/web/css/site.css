@@ -118,3 +118,12 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.admin-menu .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.admin-menu a {
+    display: block;
+    text-align: center;
+}
