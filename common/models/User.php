@@ -323,4 +323,19 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
     }
+
+    public static function isAdmin($id) {
+        $user = new User;
+        $user = $user->find()->where(['id' => $id])->one();
+
+        if ($user) {
+            if ($user->isAdmin == 1) {
+                return false;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

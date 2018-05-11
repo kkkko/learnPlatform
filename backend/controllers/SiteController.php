@@ -81,9 +81,10 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->adminLogin()) {
             return $this->goBack();
         } else {
+            Yii::$app->session->setFlash('error', "Вы не являетесь администратором");
             return $this->render('login', [
                 'model' => $model,
             ]);
