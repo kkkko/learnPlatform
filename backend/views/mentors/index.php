@@ -5,6 +5,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 
 $this->title = 'Наставники';
+$this->params['breadcrumbs'][] = 'Наставники';
 ?>
 <div class="row">
     <div class="col-xs-12">

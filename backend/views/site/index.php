@@ -15,8 +15,8 @@ $this->title = 'My Yii Application';
     <div class="body-content">
         <div class="row">
             <div class="col-xs-12 col-lg-2">
-                <a href="<?=  Url::to(['users/index']); ?>">Список пользователей</a>
-                <a href="<?=  Url::to(['mentors/index']); ?>">Список наставников</a>
+                <a href="<?=  Url::to(['users/index']); ?>">Пользователи</a>
+                <a href="<?=  Url::to(['mentors/index']); ?>">Наставники</a>
             </div>
             <div class="col-xs-12 col-lg-2">
                 <a href="<?=  Url::to(['users/create']); ?>">Добавить пользователя</a>

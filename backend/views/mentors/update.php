@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Наставники', 'url' => ['
 $this->params['breadcrumbs'][] = ['label' => $model->first_name .' ' .$model->sur_name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>
-<div class="article-update">
+<div class="user-update">
 
     <h3><?= Html::encode($this->title) ?></h3>
 

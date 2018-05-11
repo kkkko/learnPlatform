@@ -5,6 +5,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 $this->title = 'Страница пользователя';
+$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->first_name .' ' .$model->sur_name, 'url' => ['view', 'id' => $model->id]];
 ?>
 <div class="article-view">
 
