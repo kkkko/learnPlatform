@@ -16,7 +16,7 @@ class m180511_122538_create_courses_table extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string(),
             'description' => $this->string(),
-            'mentor' => $this->string(),
+            'mentor_id' => $this->integer(),
         ]);
     }
 

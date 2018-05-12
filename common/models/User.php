@@ -6,6 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -271,7 +272,7 @@ class User extends ActiveRecord implements IdentityInterface
             ->setSubject('Подтверждение регистрации на учебном портале')
             ->setHtmlBody(
                 '<b>Для подтверждения регистрации перейдите по ссылке:</b><br>
-                        <a href="' .Yii::$app->request->getHostName() .'/site/activate?email=' .$this->email .'&token=' .$token .'">' .Yii::$app->request->getHostName() .'/site/activate?email=' .$this->email .'&token=' .$token .'</a><br>
+                        <a href="' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '">' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '</a><br>
                         После потдверждения используйте ваш Email в качестве логина пароль указанный ниже: <br>
                         Пароль: ' . $password
             )
@@ -314,6 +315,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Activates user
      * @param $email
      * @param $token
      * @return bool|int
@@ -338,7 +340,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     }
 
-    public static function isAdmin($id) {
+    /**
+     * isAdmin
+     * @param $id
+     * @return bool
+     */
+    public static function isAdmin($id)
+    {
         $user = new User;
         $user = $user->find()->where(['id' => $id])->one();
 
@@ -351,5 +359,22 @@ class User extends ActiveRecord implements IdentityInterface
         } else {
             return false;
         }
+    }
+
+    /**
+     * Gets all mentors
+     * @param $id
+     * @return bool
+     */
+    public static function getAllMentors()
+    {
+        $mentors = User::find()->where(['isMentor' => 1])->all();
+        $mentors = ArrayHelper::map($mentors, 'id', 'sur_name');
+        return $mentors;
+    }
+
+    public function getCourse()
+    {
+        return $this->hasOne(Courses::className(), ['mentor_id' => 'id']);
     }
 }

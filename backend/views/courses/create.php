@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Courses */
 
-$this->title = 'Create Courses';
-$this->params['breadcrumbs'][] = ['label' => 'Courses', 'url' => ['index']];
+$this->title = 'Добавить курс';
+$this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="courses-create">
@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'mentors' => $mentors,
+        'selectedMentor' => $selectedMentor
     ]) ?>
 
 </div>

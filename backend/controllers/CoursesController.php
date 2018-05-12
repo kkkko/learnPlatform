@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\User;
 use Yii;
 use common\models\Courses;
 use common\models\CoursesSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,6 +67,8 @@ class CoursesController extends Controller
     public function actionCreate()
     {
         $model = new Courses();
+        $mentors = User::getAllMentors();
+        $selectedMentor = $model->getSelectedMentor();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,6 +76,8 @@ class CoursesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'mentors' => $mentors,
+            'selectedMentor' => $selectedMentor
         ]);
     }
 
@@ -123,5 +129,35 @@ class CoursesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionSetMentor($id)
+    {
+
+        $course = $this->findModel($id);
+        $selectedMentor = $course->selectedMentor;
+        $mentors = ArrayHelper::map(User::find()->where(['isMentor' => 1])->all(), 'id', 'sur_name');
+
+        if (Yii::$app->request->isPost) {
+
+            $mentor = Yii::$app->request->post('mentor');
+            if ($course->saveMentor($mentor)) {
+
+                return $this->redirect(['view', 'id' => $course->id]);
+
+            }
+        }
+
+        return $this->render('mentor',
+            [
+                'course' => $course,
+                'selectedMentor' => $selectedMentor,
+                'mentors' => $mentors
+            ]);
     }
 }

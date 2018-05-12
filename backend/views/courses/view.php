@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Courses */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Courses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="courses-view">
@@ -15,11 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Разделы', ['sections/index', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Изменить наставника', ['set-mentor', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы дейтсвительно хотите удалить данный курс?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -31,7 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description',
-            'mentor',
+            [
+                'label' => 'Наставник',
+                'value' => function($data) {
+                    return $data->mentor->first_name .' ' .$data->mentor->sur_name;
+                }
+            ]
         ],
     ]) ?>
 

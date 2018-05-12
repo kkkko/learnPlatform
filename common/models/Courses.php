@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "courses".
@@ -28,6 +29,7 @@ class Courses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['title', 'description'], 'required'],
             [['title', 'description', 'mentor'], 'string', 'max' => 255],
         ];
     }
@@ -39,9 +41,43 @@ class Courses extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'mentor' => 'Mentor',
+            'title' => 'Название',
+            'description' => 'Описание',
+            'mentor' => 'Закрепленный наставник',
         ];
+    }
+
+    public function getMentor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'mentor_id']);
+    }
+
+    public function getMentorName() {
+        $firstName = $this ->getMentor()->select('first_name');
+        $surName = $this ->getMentor()->select('sur_name');
+
+        return $name = $firstName .' ' .$surName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSelectedMentor()
+    {
+        $selectedMentor = $this->getMentor()->select('id')->asArray()->all();
+        return ArrayHelper::getColumn($selectedMentor, 'id');
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function saveMentor($id)
+    {
+        $mentor = User::findOne($id);
+        if ($mentor != null) {
+            $this->link('mentor', $mentor);
+            return true;
+        }
     }
 }
