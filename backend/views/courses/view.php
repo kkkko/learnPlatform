@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Разделы', ['sections/index', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Разделы', ['sections/index', 'courseId' => $model->id], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Изменить наставника', ['set-mentor', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
@@ -35,8 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             [
                 'label' => 'Наставник',
-                'value' => function($data) {
-                    return $data->mentor->first_name .' ' .$data->mentor->sur_name;
+                'value' => function ($data) {
+                    if (isset($data->mentor)) {
+                        return $data->mentor->first_name . ' ' . $data->mentor->sur_name;
+                    } else {
+                        return false;
+                    }
                 }
             ]
         ],

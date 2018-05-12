@@ -80,4 +80,24 @@ class Courses extends \yii\db\ActiveRecord
             return true;
         }
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSections()
+    {
+        return $this->hasMany(Sections::className(), ['id' => 'section_id'])
+            ->viaTable('courses_sections', ['course_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function saveSection($id)
+    {
+        if (isset($id)) {
+                $section = Sections::findOne($id);
+                $this->link('sections', $section);
+            }
+    }
 }

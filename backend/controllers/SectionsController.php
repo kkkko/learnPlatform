@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\Courses;
 use Yii;
 use common\models\Sections;
 use common\models\SectionsSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -33,10 +35,13 @@ class SectionsController extends Controller
      * Lists all Sections models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($courseId)
     {
         $searchModel = new SectionsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Courses::findOne($courseId)->getSections(),
+        ]);
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -62,16 +67,21 @@ class SectionsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($courseId)
     {
         $model = new Sections();
 
+        $course = new Courses();
+        $course= $course->find()->where(['id' => $courseId])->one();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $course->saveSection($model);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'courseId' => $courseId
         ]);
     }
 

@@ -19,7 +19,7 @@ class SectionsSearch extends Sections
     {
         return [
             [['id'], 'integer'],
-            [['course_id', 'title', 'description'], 'safe'],
+            [['title', 'description'], 'safe'],
         ];
     }
 
@@ -62,9 +62,10 @@ class SectionsSearch extends Sections
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'course_id', $this->course_id])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->joinWith('courses');
+
 
         return $dataProvider;
     }

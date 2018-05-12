@@ -28,7 +28,7 @@ class Sections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['course_id', 'title', 'description'], 'string', 'max' => 255],
+            [['title', 'description'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,9 +39,17 @@ class Sections extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'course_id' => 'Course ID',
             'title' => 'Title',
             'description' => 'Description',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCourses()
+    {
+        return $this->hasMany(Courses::className(), ['id' => 'course_id'])
+            ->viaTable('courses_sections', ['section_id' => 'id']);
     }
 }
