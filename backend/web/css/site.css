@@ -127,3 +127,6 @@ a.desc:after {
     display: block;
     text-align: center;
 }
+.lessons-form textarea {
+    height: 400px;
+}

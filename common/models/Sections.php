@@ -39,8 +39,8 @@ class Sections extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
+            'title' => 'Название',
+            'description' => 'Описание',
         ];
     }
 
@@ -51,5 +51,25 @@ class Sections extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Courses::className(), ['id' => 'course_id'])
             ->viaTable('courses_sections', ['section_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLessons()
+    {
+        return $this->hasMany(Lessons::className(), ['id' => 'lesson_id'])
+            ->viaTable('sections_lessons', ['section_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function saveLesson($id)
+    {
+        if (isset($id)) {
+            $lesson = Lessons::findOne($id);
+            $this->link('lessons', $lesson);
+        }
     }
 }

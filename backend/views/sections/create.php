@@ -6,8 +6,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Sections */
 
-$this->title = 'Create Sections';
-$this->params['breadcrumbs'][] = ['label' => 'Sections', 'url' => ['index']];
+$this->title = 'Добавить раздел';
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['courses/view', 'id' => Yii::$app->request->get('courseId')]];
+$this->params['breadcrumbs'][] = ['label' => 'Разделы', 'url' => ['sections/index', 'courseId' => Yii::$app->request->get('courseId')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sections-create">

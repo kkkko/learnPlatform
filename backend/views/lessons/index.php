@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\SectionsSearch */
+/* @var $searchModel common\models\LessonsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Разделы';
-$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['courses/view', 'id' => Yii::$app->request->get('courseId')]];
+$this->title = 'Уроки';
+$this->params['breadcrumbs'][] = ['label' => 'Раздел', 'url' => ['sections/view', 'id' => Yii::$app->request->get('sectionId')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sections-index">
+<div class="lessons-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить раздел', ['create','courseId' => Yii::$app->request->get('courseId')], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать урок', ['create','sectionId' => Yii::$app->request->get('sectionId')], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description',
+            'content',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
