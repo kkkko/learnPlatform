@@ -28,6 +28,7 @@ class Sections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['title', 'description', 'mentor'], 'required'],
             [['title', 'description'], 'string', 'max' => 255],
         ];
     }
