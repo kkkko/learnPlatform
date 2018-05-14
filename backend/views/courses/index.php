@@ -30,8 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             [
                 'label' => 'Наставник',
-                'value' => function($data) {
-                    return $data->mentor->first_name .' ' .$data->mentor->sur_name;
+                'value' => function ($data) {
+                    if ($data->mentor) {
+                        return $data->mentor->first_name . ' ' . $data->mentor->sur_name;
+                    } else {
+                        return 'Не назначен';
+                    }
                 }
             ],
 
