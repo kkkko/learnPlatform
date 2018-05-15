@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Sections */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Разделы', 'url' => ['sections/index', 'courseId' => Yii::$app->request->get('courseId')]];
+$this->params['breadcrumbs'][] = ['label' => 'Разделы курса', 'url' => ['sections/index', 'courseId' => Yii::$app->request->get('id')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sections-view">

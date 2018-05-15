@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить раздел', ['create','courseId' => Yii::$app->request->get('courseId')], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить раздел', ['create', 'courseId' => Yii::$app->request->get('courseId')], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
