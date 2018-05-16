@@ -70,9 +70,8 @@ class SectionsController extends Controller
     public function actionCreate($courseId)
     {
         $model = new Sections();
-
         $course = new Courses();
-        $course= $course->find()->where(['id' => $courseId])->one();
+        $course= $course->findOne($courseId);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $course->saveSection($model);

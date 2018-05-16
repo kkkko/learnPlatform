@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model common\models\Lessons */
 
 $this->title = 'Изменить урок: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index', 'sectionId' => Yii::$app->request->get('sectionId')]];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id, 'sectionId' => Yii::$app->request->get('sectionId')]];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>
 <div class="lessons-update">

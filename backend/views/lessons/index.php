@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Создать урок', ['create','sectionId' => Yii::$app->request->get('sectionId')], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать урок', ['create', 'sectionId' => Yii::$app->request->get('sectionId')], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -31,7 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             'content',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'view' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id' => $model['id'], 'sectionId' => Yii::$app->request->get('sectionId')], ['title' => 'Просмотр']);
+                    },
+                    'update' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model['id'], 'sectionId' => Yii::$app->request->get('sectionId')], ['title' => 'Редактировать']);
+                    },
+                    'delete' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model['id'], 'sectionId' => Yii::$app->request->get('sectionId')], ['title' => 'Удалить']);
+                    },
+                ],
+            ],
         ],
     ]); ?>
 </div>

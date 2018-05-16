@@ -91,7 +91,8 @@ class Courses extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @param $id
+     * @return void
      */
     public function saveSection($id)
     {
