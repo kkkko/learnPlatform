@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\User;
 use Yii;
+use common\models\ImageUpload;
 use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
@@ -15,6 +16,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -68,6 +70,25 @@ class AccountController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionSetAvatar($id)
+    {
+        $model = new ImageUpload;
+        if (Yii::$app->request->isPost) {
+            $user = $this->findModel($id);
+            $file = UploadedFile::getInstance($model, 'avatar');
+            if ($user->saveImage($model->uploadFile($file, $user->avatar))) {
+                return $this->redirect(['/account/index']);
+            }
+        }
+
+        return $this->render('avatar', ['model' => $model]);
     }
 
     /**

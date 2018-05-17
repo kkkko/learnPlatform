@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\ImageUpload;
 use common\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -9,6 +10,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -134,6 +136,24 @@ class UsersController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionSetAvatar($id)
+    {
+        $model = new ImageUpload;
+        if (Yii::$app->request->isPost) {
+            $user = $this->findModel($id);
+            $file = UploadedFile::getInstance($model, 'avatar');
+            if ($user->saveImage($model->uploadFile($file, $user->avatar))) {
+                return $this->redirect(['/users/update', 'id' => $user->id]);
+            }
+        }
+
+        return $this->render('avatar', ['model' => $model]);
     }
 
 }

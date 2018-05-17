@@ -15,14 +15,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'summary' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+
+            [
+                'format' => 'html',
+                'label' => 'Аватар',
+                'value' => function ($data) {
+                    return Html::img($data->getImage(), ['width' => 100, 'height' => 100]);
+                },
+            ],
 
             'email',
             'first_name',
             'sur_name',
+            'birth_date',
             'male',
-            'avatar',
             'about',
             'phone_number',
             'country',
