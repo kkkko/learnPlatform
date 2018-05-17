@@ -8,6 +8,16 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<? $script = <<< JS
+    $(document).ready(function(){
+            var editor = CKEDITOR.replaceAll();
+            CKFinder.setupCKEditor( editor );
+        })
+JS;
+
+$this->registerJs($script);
+?>
+
 <div class="lessons-form">
 
     <?php $form = ActiveForm::begin(); ?>

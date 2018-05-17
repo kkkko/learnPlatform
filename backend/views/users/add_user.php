@@ -5,7 +5,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Добавить пользователя';
+$this->title = 'Добавить ученика';
 ?>
 <div class="site-index">
     <? $form = ActiveForm::begin([

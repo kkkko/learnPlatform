@@ -133,4 +133,9 @@ class SectionsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function getCourseName($courseId) {
+        $course = Courses::findOne($courseId);
+        return $course->title;
+    }
 }

@@ -64,7 +64,9 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_DELETED],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['first_name', 'sur_name', 'email'], 'required'],
-            [['first_name', 'sur_name'], 'string', 'max' => 20],
+            [['first_name', 'sur_name', 'male'], 'string', 'max' => 20],
+            [['avatar', 'phone_number', 'country', 'city'], 'string'],
+            [['about'], 'string', 'max' => 200],
             ['email', 'email'],
             ['email', 'unique', 'targetAttribute' => ['email'], 'message' => 'Пользователь с такой почтой уже существует.'],
 
@@ -271,10 +273,17 @@ class User extends ActiveRecord implements IdentityInterface
             ->setTo($email)
             ->setSubject('Подтверждение регистрации на учебном портале')
             ->setHtmlBody(
-                '<b>Для подтверждения регистрации перейдите по ссылке:</b><br>
-                        <a href="' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '">' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '</a><br>
-                        После потдверждения используйте ваш Email в качестве логина пароль указанный ниже: <br>
-                        Пароль: ' . $password
+                '  <p>Здравсвуйте!<br>Вы зарегистрированы в системе дистанционного образования "Название"</p>
+                        <p>Пожалуйста, подтвердите свой эл. адрес перейдя по ссылке:</p>
+                        <a href="' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '">Подтвержение e-mail</a><br>
+                        <p>Ваш логин:' .$email .'<br>
+                        Ваш пароль: ' . $password .'<br>
+                        Вы можете войти в личный кабинет по адресу [пока что отсутствует] введя свой логин и пароль<br>
+                        Если у вас возникнут какие-либо вопросы или технические сложности,<br>
+                        вы можете задать их, воспользовавшись контактами, указанными ниже:<br>
+                        Тел: +7 909 909 90 90<br>
+                        E-mail: email@mail.ru
+                        <p>'
             )
             ->send();
     }

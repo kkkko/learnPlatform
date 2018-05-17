@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\helpers\Html;
@@ -43,7 +44,7 @@ AppAsset::register($this);
         $menuItems[] = '<li>'
             . Html::beginForm(['/logout'], 'post')
             . Html::submitButton(
-                'Выход (' . Yii::$app->user->identity->first_name .' ' .  Yii::$app->user->identity->sur_name . ')',
+                'Выход (' . Yii::$app->user->identity->first_name . ' ' . Yii::$app->user->identity->sur_name . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
@@ -58,6 +59,10 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
+            'homeLink' => [
+                'label' => 'Главная',
+                'url' => '.'
+            ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
@@ -68,8 +73,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 

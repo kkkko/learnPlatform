@@ -8,7 +8,8 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Разделы';
-$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['courses/view', 'id' => Yii::$app->request->get('courseId')]];
+$this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['courses/index']];
+$this->params['breadcrumbs'][] = ['label' => $this->context->getCourseName(Yii::$app->request->get('courseId')), 'url' => ['courses/view', 'id' => Yii::$app->request->get('courseId')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sections-index">
