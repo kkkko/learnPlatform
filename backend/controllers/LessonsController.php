@@ -25,7 +25,7 @@ class LessonsController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -67,7 +67,7 @@ class LessonsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($sectionId)
+    public function actionCreate($sectionId, $courseId)
     {
         $model = new Lessons();
         $section = new Sections();
@@ -75,7 +75,7 @@ class LessonsController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $section->saveLesson($model);
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/lessons/index', 'sectionId' => $sectionId, 'courseId' => $courseId]);
         }
 
         return $this->render('create', [
@@ -90,12 +90,12 @@ class LessonsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $sectionId, $courseId)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/lessons/index', 'sectionId' => $sectionId, 'courseId' => $courseId]);
         }
 
         return $this->render('update', [
@@ -110,11 +110,11 @@ class LessonsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $sectionId, $courseId)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'sectionId' => $sectionId, 'courseId' => $courseId]);
     }
 
     /**

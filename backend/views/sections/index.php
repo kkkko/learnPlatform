@@ -31,7 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'view' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id' => $model['id'], 'courseId' => Yii::$app->request->get('courseId')], ['title' => 'Просмотр']);
+                    },
+                    'update' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model['id'], 'courseId' => Yii::$app->request->get('courseId')], ['title' => 'Редактировать']);
+                    },
+                    'delete' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model['id'], 'courseId' => Yii::$app->request->get('courseId')], ['title' => 'Удалить']);
+                    },
+                ],
+            ],
         ],
     ]); ?>
 </div>

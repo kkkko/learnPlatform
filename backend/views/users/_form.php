@@ -36,6 +36,10 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'about')->textarea(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'vk_link')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'fb_link')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'country')->textInput(['maxlength' => true]) ?>

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Sections */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => $this->context->getCourseName(Yii::$app->request->get('id')), 'url' => ['sections/index', 'courseId' => Yii::$app->request->get('id')]];
+$this->params['breadcrumbs'][] = ['label' => $this->context->getCourseName(Yii::$app->request->get('courseId')), 'url' => ['sections/index', 'courseId' => Yii::$app->request->get('id')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sections-view">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Уроки', ['lessons/index', 'sectionId' => $model->id], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Уроки', ['lessons/index', 'sectionId' => $model->id, 'courseId' => Yii::$app->request->get('courseId')], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',

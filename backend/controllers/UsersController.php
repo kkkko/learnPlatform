@@ -139,6 +139,20 @@ class UsersController extends Controller
     }
 
     /**
+     * Deletes an existing Lessons model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
      * @param $id
      * @return string|\yii\web\Response
      */

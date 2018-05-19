@@ -25,7 +25,7 @@ class SectionsController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['GET'],
                 ],
             ],
         ];
@@ -75,7 +75,7 @@ class SectionsController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $course->saveSection($model);
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'courseId' => $courseId]);
         }
 
         return $this->render('create', [
@@ -111,11 +111,11 @@ class SectionsController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id,$courseId)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'courseId' => $courseId]);
     }
 
     /**

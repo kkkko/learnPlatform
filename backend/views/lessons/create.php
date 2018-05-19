@@ -7,7 +7,9 @@ use yii\helpers\Html;
 /* @var $model common\models\Lessons */
 
 $this->title = 'Добавить урок';
-$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['courses/view', 'id' => Yii::$app->request->get('courseId')]];
+$this->params['breadcrumbs'][] = ['label' => 'Разделы', 'url' => ['sections/index', 'courseId' => Yii::$app->request->get('courseId')]];
+$this->params['breadcrumbs'][] = ['label' => 'Уроки', 'url' => ['index', 'courseId' => Yii::$app->request->get('courseId'), 'sectionId' => Yii::$app->request->get('sectionId')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lessons-create">

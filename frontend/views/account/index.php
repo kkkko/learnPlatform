@@ -33,6 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'birth_date',
             'male',
             'about',
+            'vk_link',
+            'fb_link',
             'phone_number',
             'country',
             'city',

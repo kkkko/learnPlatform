@@ -66,6 +66,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['first_name', 'sur_name', 'email'], 'required'],
             [['first_name', 'sur_name', 'male'], 'string', 'max' => 20],
+            [['fb_link', 'vk_link'], 'string', 'max' => 40],
             [['avatar', 'phone_number', 'country', 'city', 'birth_date'], 'string'],
             [['about'], 'string', 'max' => 200],
             ['email', 'email'],
@@ -90,7 +91,9 @@ class User extends ActiveRecord implements IdentityInterface
             'phone_number' => 'Номер телефона',
             'country' => 'Страна',
             'city' => 'Город',
-            'birth_date' => 'Дата рождения'
+            'birth_date' => 'Дата рождения',
+            'vk_link' => 'Ссылка на профиль Вконтакте',
+            'fb_link' => 'Ссылка на профиль Facebook'
         ];
     }
 
