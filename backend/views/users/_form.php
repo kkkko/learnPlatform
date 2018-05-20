@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\date\DatePicker;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Lessons */
@@ -23,14 +23,11 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'sur_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'birth_date')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => ''],
-        'language' => 'ru',
-        'pluginOptions' => [
-            'autoclose' => true
-        ]
-    ])->label('Дата рождения');
-    ?>
+    <?= $form->field($model, 'birth_date')->widget(MaskedInput::className(), [
+        'name' => 'User[birth_date]',
+        'attribute' => 'User[birth_date]',
+        'clientOptions' => ['alias' => 'dd.mm.yyyy']
+    ]) ?>
 
     <?= $form->field($model, 'male')->dropDownList(['Муж.' => 'Муж.', 'Жен.' => 'Жен.']) ?>
 
