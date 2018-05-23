@@ -35,7 +35,11 @@ use yii\widgets\MaskedInput;
 
     <?= $form->field($model, 'fb_link')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'phone_number')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'phone_number')->widget(MaskedInput::className(), [
+        'name' => 'User[phone_number]',
+        'attribute' => 'User[phone_number]',
+        'clientOptions' => ['alias' => '+9 999 999 99 99']
+    ]) ?>
 
     <?= $form->field($model, 'country')->textInput(['maxlength' => true]) ?>
 

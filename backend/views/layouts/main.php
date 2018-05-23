@@ -35,7 +35,7 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Главная', 'url' => ['/']],
+        ['label' => 'Главная', 'url' => ['/admin']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Войти', 'url' => ['/login']];
@@ -60,7 +60,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'homeLink' => [
                 'label' => 'Главная',
-                'url' => '.'
+                'url' => '/admin'
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
