@@ -61,7 +61,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'homeLink' => [
                 'label' => 'Главная',
-                'url' => '/account/index'
+                'url' => '/'
             ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
