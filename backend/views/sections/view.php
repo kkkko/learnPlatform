@@ -16,12 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Уроки', ['lessons/index', 'sectionId' => $model->id, 'courseId' => Yii::$app->request->get('courseId')], ['class' => 'btn btn-default']) ?>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id, 'courseId' => Yii::$app->request->get('courseId')], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id, 'courseId' => Yii::$app->request->get('courseId')], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Вы действительно хотите удалить этот раздел?',
-                'method' => 'post',
             ],
         ]) ?>
     </p>

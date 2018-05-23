@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\User;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -73,6 +74,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(['site/login']);
+        }
         return $this->render('index');
     }
 
@@ -89,7 +93,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['account/index']);
         } else {
             return $this->render('login', [
                 'model' => $model,

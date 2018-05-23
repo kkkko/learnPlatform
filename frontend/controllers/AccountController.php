@@ -45,6 +45,10 @@ class AccountController extends Controller
      */
     public function actionIndex()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => User::find()->where(['id' => Yii::$app->user->id]),
         ]);

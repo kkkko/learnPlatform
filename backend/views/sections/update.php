@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model common\models\Sections */
 
 $this->title = 'Update Sections: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Разделы', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Редактирование';
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['courses/view', 'id' => Yii::$app->request->get('courseId')]];
+$this->params['breadcrumbs'][] = ['label' => 'Разделы', 'url' => ['sections/index', 'courseId' => Yii::$app->request->get('courseId')]];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sections-update">
 

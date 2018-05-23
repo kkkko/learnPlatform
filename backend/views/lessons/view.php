@@ -15,12 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->id, 'sectionId' => Yii::$app->request->get('sectionId')], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id, 'sectionId' => Yii::$app->request->get('sectionId'), 'courseId' => Yii::$app->request->get('courseId')], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id, 'sectionId' => Yii::$app->request->get('sectionId'), 'courseId' => Yii::$app->request->get('courseId')], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Вы действительно хотите удалить данный урок?',
-                'method' => 'post',
             ],
         ]) ?>
     </p>
