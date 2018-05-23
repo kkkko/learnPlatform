@@ -1,10 +1,12 @@
 <?php
+
 namespace frontend\controllers;
 
 use common\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -198,22 +200,25 @@ class SiteController extends Controller
     /**
      * Activates user
      */
-    public function actionActivate() {
+    public function actionActivate()
+    {
+
         if (Yii::$app->request->get()) {
 
             $email = Yii::$app->request->get('email');
             $token = Yii::$app->request->get('token');
 
-            $user = new User();
+            $model = new User();
+            $user = User::find()->where(['email' => $email])->one();
 
-            $user->activateUser($email, $token);
-
-            if ($user) {
+            if ($model && $model->activateUser($email, $token)) {
                 if (Yii::$app->getUser()->login($user)) {
                     Yii::$app->session->setFlash('success', "Адрес электронной почты подтвержден");
-                    return $this->goHome();
+                    return $this->redirect(Url::to(['account/update', 'id' => $user->id]));
                 }
-            };
+            } else {
+                $this->redirect('/');
+            }
         }
     }
 }

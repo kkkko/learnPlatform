@@ -26,7 +26,7 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'birth_date')->widget(MaskedInput::className(), [
         'name' => 'User[birth_date]',
         'attribute' => 'User[birth_date]',
-        'clientOptions' => ['alias' => 'dd.mm.yyyy']
+        'clientOptions' => ['alias' => 'dd.mm.yyyy', 'placeholder' => '01.01.1960']
     ]) ?>
 
     <?= $form->field($model, 'male')->dropDownList(['Муж.' => 'Муж.', 'Жен.' => 'Жен.']) ?>

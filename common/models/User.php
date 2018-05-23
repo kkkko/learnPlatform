@@ -366,7 +366,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         if ($user) {
             if ($user->isAdmin == 1) {
-                return false;
+                return true;
             } else {
                 return false;
             }

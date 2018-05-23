@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\User;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -12,6 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="lessons-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <? if (User::isAdmin(Yii::$app->user->id)) {
+        echo Html::a('Перейти в панель администратора', ['/admin']);
+    } ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

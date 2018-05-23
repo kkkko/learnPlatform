@@ -11,6 +11,7 @@ $this->title = 'Учебная платформа';
     height: 75vh;">
 
     <div class="jumbotron">
+        <h2>Добро пожаловать</h2>
         <p><a class="btn btn-lg btn-success" href="/account/index">Перейти в кабинет</a></p>
     </div>
 
