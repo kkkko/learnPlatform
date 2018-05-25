@@ -283,7 +283,7 @@ class User extends ActiveRecord implements IdentityInterface
                         <a href="' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '">Подтвержение e-mail</a><br>
                         <p>Ваш логин:' . $email . '<br>
                         Ваш пароль: ' . $password . '<br>
-                        Вы можете войти в личный кабинет по адресу [пока что отсутствует] введя свой логин и пароль<br>
+                        Вы можете войти в личный кабинет по адресу <a href="'. Yii::$app->request->getHostName() .'">' . Yii::$app->request->getHostName() . '</a> введя свой логин и пароль<br>
                         Если у вас возникнут какие-либо вопросы или технические сложности,<br>
                         вы можете задать их, воспользовавшись контактами, указанными ниже:<br>
                         Тел: +7 909 909 90 90<br>
