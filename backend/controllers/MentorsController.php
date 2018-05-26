@@ -72,6 +72,7 @@ class MentorsController extends Controller
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
             'query' => User::find()->where(['isMentor' => 1])->orderBy('id desc'),
             'pagination' => [
@@ -103,6 +104,7 @@ class MentorsController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new User();
         $model->isMentor = 1;
 
@@ -124,6 +126,7 @@ class MentorsController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->saveUserUpdate()) {
@@ -144,6 +147,7 @@ class MentorsController extends Controller
      */
     public function actionDelete($id)
     {
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

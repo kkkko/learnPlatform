@@ -76,6 +76,7 @@ class UsersController extends Controller
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
             'query' => User::find()->where(['isAdmin' => null, 'isMentor' => null])->orderBy('id desc'),
             'pagination' => [
@@ -95,6 +96,7 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -107,6 +109,7 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->saveUser()) {
@@ -127,6 +130,7 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->saveUserUpdate()) {
@@ -147,6 +151,7 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -158,6 +163,7 @@ class UsersController extends Controller
      */
     public function actionSetAvatar($id)
     {
+
         $model = new ImageUpload;
         if (Yii::$app->request->isPost) {
             $user = $this->findModel($id);
@@ -169,5 +175,6 @@ class UsersController extends Controller
 
         return $this->render('avatar', ['model' => $model]);
     }
+
 
 }

@@ -37,6 +37,7 @@ class CoursesController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new CoursesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,6 +55,7 @@ class CoursesController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,6 +68,7 @@ class CoursesController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new Courses();
         $mentors = User::getAllMentors();
         $selectedMentor = $model->getSelectedMentor();
@@ -90,6 +93,7 @@ class CoursesController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -110,6 +114,7 @@ class CoursesController extends Controller
      */
     public function actionDelete($id)
     {
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

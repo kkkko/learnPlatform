@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Sections;
+use common\models\User;
 use Yii;
 use common\models\Lessons;
 use common\models\LessonsSearch;
@@ -37,6 +38,7 @@ class LessonsController extends Controller
      */
     public function actionIndex($sectionId)
     {
+
         $searchModel = new LessonsSearch();
 
         $dataProvider = new ActiveDataProvider([
@@ -57,6 +59,7 @@ class LessonsController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -69,6 +72,7 @@ class LessonsController extends Controller
      */
     public function actionCreate($sectionId, $courseId)
     {
+
         $model = new Lessons();
         $section = new Sections();
         $section = $section->findOne($sectionId);
@@ -92,6 +96,7 @@ class LessonsController extends Controller
      */
     public function actionUpdate($id, $sectionId, $courseId)
     {
+
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

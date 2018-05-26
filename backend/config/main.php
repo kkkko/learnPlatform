@@ -1,4 +1,7 @@
 <?php
+
+use common\models\User;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -11,13 +14,19 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'language'=>'ru',
+    'language' => 'ru',
     'modules' => [
         'debug' => [
             'class' => 'yii\debug\Module',
             'allowedIPs' => ['127.0.0.1', '::1']
         ]
     ],
+    'on beforeAction' => function () {
+        if (!User::isAdmin(Yii::$app->user->id)) {
+            return Yii::$app->response->redirect('/', 403)->send();
+        }
+        return true;
+    },
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
