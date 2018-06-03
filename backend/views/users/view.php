@@ -4,9 +4,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+
 $this->title = 'Страница ученика';
 $this->params['breadcrumbs'][] = ['label' => 'Ученики', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->first_name .' ' .$model->sur_name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->first_name . ' ' . $model->sur_name, 'url' => ['view', 'id' => $model->id]];
 ?>
 <div class="article-view">
 
@@ -18,7 +19,16 @@ $this->params['breadcrumbs'][] = ['label' => $model->first_name .' ' .$model->su
             'id',
             'first_name',
             'sur_name',
+            'birth_date',
+            'male',
+            'country',
+            'city',
             'email',
+            'phone_number',
+            'vk_link',
+            'fb_link',
+            'about'
+
         ],
     ]) ?>
 

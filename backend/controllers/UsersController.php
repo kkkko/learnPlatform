@@ -10,7 +10,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
 
 /**
  * Site controller
@@ -137,7 +139,7 @@ class UsersController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->saveUserUpdate()) {
             $file = UploadedFile::getInstance($model, 'avatar');
-            if ($model->saveImage($avatar->uploadFile($file, $model->avatar))) {
+            if ($file != null && $model->saveImage($avatar->uploadFile($file, $model->avatar))) {
                 return $this->redirect(['view', 'id' => $id]);
             }
         }

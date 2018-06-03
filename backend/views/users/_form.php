@@ -41,7 +41,7 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'male')->dropDownList(['Муж.' => 'Муж.', 'Жен.' => 'Жен.']) ?>
 
-    <?= $form->field($model, 'about')->textarea(['maxlength' => true]) ?>
+    <?= $form->field($model, 'about')->textarea(['maxlength' => true, 'style' => ['resize' => 'none']]) ?>
 
     <?= $form->field($model, 'vk_link')->textInput(['maxlength' => true]) ?>
 

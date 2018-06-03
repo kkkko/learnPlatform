@@ -37,8 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'vk_link',
             'fb_link',
             'phone_number',
-            'country',
-            'city',
 
             [
                 'class' => 'yii\grid\ActionColumn',
