@@ -67,7 +67,14 @@ class AccountController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        $avatar = new ImageUpload;
+
         if ($model->load(Yii::$app->request->post()) && $model->saveUserUpdate()) {
+            $file = UploadedFile::getInstance($model, 'avatar');
+            if ($file != null && $model->saveImage($avatar->uploadFile($file, $model->avatar))) {
+                return $this->redirect(['/account/index']);
+            }
             return $this->redirect(['/account/index']);
         }
 
@@ -76,24 +83,6 @@ class AccountController extends Controller
         ]);
     }
 
-
-    /**
-     * @param $id
-     * @return string|\yii\web\Response
-     */
-    public function actionSetAvatar($id)
-    {
-        $model = new ImageUpload;
-        if (Yii::$app->request->isPost) {
-            $user = $this->findModel($id);
-            $file = UploadedFile::getInstance($model, 'avatar');
-            if ($user->saveImage($model->uploadFile($file, $user->avatar))) {
-                return $this->redirect(['/account/index']);
-            }
-        }
-
-        return $this->render('avatar', ['model' => $model]);
-    }
 
     /**
      * Finds the Sections model based on its primary key value.

@@ -62,13 +62,24 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['birth_date', 'default', 'value' => null],
+            ['male', 'default', 'value' => null],
+            ['about', 'default', 'value' => null],
+            ['fb_link', 'default', 'value' => null],
+            ['vk_link', 'default', 'value' => null],
+            ['phone_number', 'default', 'value' => null],
+            ['country', 'default', 'value' => null],
+            ['city', 'default', 'value' => null],
+            ['avatar', 'default', 'value' => 'no-image.png'],
             ['status', 'default', 'value' => self::STATUS_DELETED],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['first_name', 'sur_name', 'email'], 'required'],
             [['first_name', 'sur_name', 'male'], 'string', 'max' => 20],
+            [['birth_date'], 'string', 'min' => 10],
             [['fb_link', 'vk_link'], 'string', 'max' => 40],
             [['avatar', 'phone_number', 'country', 'city', 'birth_date'], 'string'],
             [['about'], 'string', 'max' => 200],
+            [['phone_number'], 'string', 'min' => 16],
             ['email', 'email'],
             ['email', 'unique', 'targetAttribute' => ['email'], 'message' => 'Пользователь с такой почтой уже существует.'],
 
@@ -274,14 +285,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function sendEmail($email, $token, $password)
     {
         Yii::$app->mailer->compose()
-            ->setFrom('learnplat@mail.ru')
+            ->setFrom('info@online-integrion.ru')
             ->setTo($email)
             ->setSubject('Подтверждение регистрации на учебном портале')
             ->setHtmlBody(
-                '  <p>Здравсвуйте!<br>Вы зарегистрированы в системе дистанционного образования "Название"</p>
+                '  <p>Здравствуйте!<br>Вы зарегистрированы в системе дистанционного образования "Название"</p>
                         <p>Пожалуйста, подтвердите свой эл. адрес перейдя по ссылке:</p>
-                        <a href="' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '">Подтвержение e-mail</a><br>
-                        <p>Ваш логин:' . $email . '<br>
+                        <a href="https://' . Yii::$app->request->getHostName() . '/site/activate?email=' . $this->email . '&token=' . $token . '">Перейти по ссылке</a><br>
+                        <p>Ваш логин: ' . $email . '<br>
                         Ваш пароль: ' . $password . '<br>
                         Вы можете войти в личный кабинет по адресу <a href="'. Yii::$app->request->getHostName() .'">' . Yii::$app->request->getHostName() . '</a> введя свой логин и пароль<br>
                         Если у вас возникнут какие-либо вопросы или технические сложности,<br>

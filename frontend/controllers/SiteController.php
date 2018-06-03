@@ -82,14 +82,29 @@ class SiteController extends Controller
                 if (User::isAdmin(Yii::$app->user->id)) {
                     return $this->redirect(['/admin']);
                 }
-                return $this->redirect(['account/index']);
+                $dataProvider = new ActiveDataProvider([
+                    'query' => User::find()->where(['id' => Yii::$app->user->id]),
+                ]);
+                return $this->render('index',
+                    [
+                        'dataProvider' => $dataProvider,
+                    ]);
             } else {
                 return $this->render('login', [
                     'model' => $model,
                 ]);
             }
         } else {
-            return $this->render('index');
+            if (User::isAdmin(Yii::$app->user->id)) {
+                return $this->redirect(['/admin']);
+            }
+            $dataProvider = new ActiveDataProvider([
+                'query' => User::find()->where(['id' => Yii::$app->user->id]),
+            ]);
+            return $this->render('index',
+                [
+                    'dataProvider' => $dataProvider,
+                ]);
         }
     }
 
@@ -106,7 +121,13 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect(['account/index']);
+            $dataProvider = new ActiveDataProvider([
+                'query' => User::find()->where(['id' => Yii::$app->user->id]),
+            ]);
+            return $this->render('index',
+            [
+                'dataProvider' => $dataProvider,
+            ]);
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -147,6 +168,16 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * Displays Privacy policy page.
+     *
+     * @return mixed
+     */
+    public function actionPrivacy()
+    {
+        return $this->render('privacy_policy');
     }
 
     /**

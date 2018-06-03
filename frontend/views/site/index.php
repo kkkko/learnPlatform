@@ -1,54 +1,53 @@
 <?php
 
+use yii\helpers\Html;
+use yii\grid\GridView;
+use common\models\User;
+
 /* @var $this yii\web\View */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Учебная платформа';
+$this->title = 'Личный кабинет';
 ?>
-<div class="site-index" style="display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 75vh;">
+<div class="lessons-index">
 
-    <div class="jumbotron">
-        <h2>Добро пожаловать</h2>
-        <p><a class="btn btn-lg btn-success" href="/account/index">Перейти в кабинет</a></p>
-    </div>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-<!--    <div class="body-content">-->
-<!---->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-4">-->
-<!--                <h2>Heading</h2>-->
-<!---->
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et-->
-<!--                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip-->
-<!--                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu-->
-<!--                    fugiat nulla pariatur.</p>-->
-<!---->
-<!--                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4">-->
-<!--                <h2>Heading</h2>-->
-<!---->
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et-->
-<!--                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip-->
-<!--                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu-->
-<!--                    fugiat nulla pariatur.</p>-->
-<!---->
-<!--                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4">-->
-<!--                <h2>Heading</h2>-->
-<!---->
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et-->
-<!--                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip-->
-<!--                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu-->
-<!--                    fugiat nulla pariatur.</p>-->
-<!---->
-<!--                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--    </div>-->
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'summary' => false,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            [
+                'format' => 'html',
+                'label' => 'Аватар',
+                'value' => function ($data) {
+                    return Html::img($data->getImage(), ['width' => 100, 'height' => 100]);
+                },
+            ],
+
+            'email',
+            'first_name',
+            'sur_name',
+            'birth_date',
+            'male',
+            'about',
+            'vk_link',
+            'fb_link',
+            'phone_number',
+            'country',
+            'city',
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}',
+                'buttons' => [
+                    'update' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['account/update', 'id' => $model['id']], ['title' => 'Просмотр']);
+                    },
+                ]
+            ],
+        ],
+    ]); ?>
 </div>

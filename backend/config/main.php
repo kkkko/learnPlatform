@@ -23,7 +23,7 @@ return [
     ],
     'on beforeAction' => function () {
         if (!User::isAdmin(Yii::$app->user->id)) {
-            return Yii::$app->response->redirect('/', 403)->send();
+            return Yii::$app->response->redirect('site/error');
         }
         return true;
     },

@@ -133,8 +133,13 @@ class UsersController extends Controller
 
         $model = $this->findModel($id);
 
+        $avatar = new ImageUpload;
+
         if ($model->load(Yii::$app->request->post()) && $model->saveUserUpdate()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $file = UploadedFile::getInstance($model, 'avatar');
+            if ($model->saveImage($avatar->uploadFile($file, $model->avatar))) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
         }
 
         return $this->render('update', [
@@ -155,25 +160,6 @@ class UsersController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * @param $id
-     * @return string|\yii\web\Response
-     */
-    public function actionSetAvatar($id)
-    {
-
-        $model = new ImageUpload;
-        if (Yii::$app->request->isPost) {
-            $user = $this->findModel($id);
-            $file = UploadedFile::getInstance($model, 'avatar');
-            if ($user->saveImage($model->uploadFile($file, $user->avatar))) {
-                return $this->redirect(['/users/update', 'id' => $user->id]);
-            }
-        }
-
-        return $this->render('avatar', ['model' => $model]);
     }
 
 

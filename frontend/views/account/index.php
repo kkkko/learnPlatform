@@ -14,10 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <? if (User::isAdmin(Yii::$app->user->id)) {
-        echo Html::a('Перейти в панель администратора', ['/admin']);
-    } ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'summary' => false,

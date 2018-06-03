@@ -4,6 +4,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
 
 $this->title = 'Добавить ученика';
 ?>
@@ -13,8 +14,12 @@ $this->title = 'Добавить ученика';
         'options' => ['class' => 'form-horizontal'],
     ]) ?>
     <?= $form->field($model, 'first_name')->label('Имя') ?>
+
     <?= $form->field($model, 'sur_name')->label('Фамилия') ?>
+
     <?= $form->field($model, 'email')->label('Email') ?>
+
+    <?= $form->field($model, 'country')->hiddenInput(['value' => 'Россия'])->label(false) ?>
 
     <div class="form-group">
         <div class="col-xs-12" style="padding: 0;">
