@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\User;
+use frontend\models\ChangePassword;
 use Yii;
 use common\models\ImageUpload;
 use yii\base\InvalidParamException;
@@ -81,6 +82,29 @@ class AccountController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Chacnge password page.
+     *
+     * @return mixed
+     */
+    public function actionChangePassword()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        }
+
+        $model = new ChangePassword();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->changePassword(Yii::$app->user->id);
+        }
+
+        return $this->render('change_password',
+            [
+                'model' => $model,
+            ]);
     }
 
 

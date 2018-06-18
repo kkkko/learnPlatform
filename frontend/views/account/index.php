@@ -44,4 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+
+    <?= Html::a('Сменить пароль', ['change-password']) ?>
 </div>
